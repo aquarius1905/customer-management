@@ -28,7 +28,7 @@
     </tr>
     @foreach($items as $item)
     <tr>
-      <td>{{$item->id}}</td>
+      <td><input type="text" name="id" value="{{$item->id}}"></td>
       <td><input type="text" name="name" value="{{$item->name}}"></td>
       <td><input type="text" name="name_furigana" value="{{$item->name_furigana}}"></td>
       <td><input type="date" name="birthday" value="{{$item->birthday}}"></td>
