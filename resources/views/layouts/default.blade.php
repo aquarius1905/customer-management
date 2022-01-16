@@ -43,7 +43,6 @@
       color: #fff;
       padding: 10px 20px;
       width: 160px;
-      margin: 0 auto;
       font-weight: bold;
       font-size: 18px;
       cursor: pointer;

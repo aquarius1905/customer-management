@@ -19,3 +19,5 @@ Route::get('/add', [CustomerController::class, 'add']);
 Route::post('/add', [CustomerController::class, 'create']);
 Route::get('/update', [CustomerController::class, 'edit']);
 Route::post('/update', [CustomerController::class, 'update']);
+Route::get('/delete', [CustomerController::class, 'delete']);
+Route::post('/delete', [CustomerController::class, 'remove']);

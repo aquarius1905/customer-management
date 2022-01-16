@@ -17,17 +17,8 @@
   input {
     width: 80%;
   }
-  .btn {
-    display: block;
-    border: none;
-    background: #28b893;
-    color: #fff;
-    padding: 10px 20px;
-    width: 160px;
+  .add_btn {
     margin: 0 auto;
-    font-weight: bold;
-    font-size: 18px;
-    cursor: pointer;
   }
 </style>
 @section('title', '顧客の追加')
@@ -53,6 +44,6 @@
     <td><input type="text" name="email"></td>
   </tr>
   </table>
-  <button class="btn">送信</button>
+  <button class="add_btn btn">追加</button>
 </form>
 @endsection

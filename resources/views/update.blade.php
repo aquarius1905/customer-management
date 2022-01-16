@@ -12,11 +12,15 @@
   input {
     width: 80%;
   }
+  .update_btn {
+    margin: 0 0 0 auto;
+  }
 </style>
 @section('title', '顧客情報の更新')
 @section('side')
 @section('main')
 <form action="/update" method="POST">
+  <button class="update_btn btn">更新</button>
   <table>
     @csrf
     <tr>
@@ -28,14 +32,13 @@
     </tr>
     @foreach($items as $item)
     <tr>
-      <td><input type="text" name="id" value="{{$item->id}}"></td>
-      <td><input type="text" name="name" value="{{$item->name}}"></td>
-      <td><input type="text" name="name_furigana" value="{{$item->name_furigana}}"></td>
-      <td><input type="date" name="birthday" value="{{$item->birthday}}"></td>
-      <td><input type="text" name="email" value="{{$item->email}}"></td>
+      <td>{{$item->id}}<input type="hidden" name="ids[]" value="{{$item->id}}"></td>
+      <td><input type="text" name="names[]" value="{{$item->name}}"></td>
+      <td><input type="text" name="name_furiganas[]" value="{{$item->name_furigana}}"></td>
+      <td><input type="date" name="birthdays[]" value="{{$item->birthday}}"></td>
+      <td><input type="text" name="emails[]" value="{{$item->email}}"></td>
     </tr>
     @endforeach
   </table>
-  <button class="btn">送信</button>
 </form>
 @endsection

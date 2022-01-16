@@ -15,11 +15,15 @@
   input {
     width: 80%;
   }
+  .delete_btn {
+    margin: 0 0 0 auto;
+  }
 </style>
 @section('title', '顧客情報の削除')
 @section('side')
 @section('main')
 <form action="/delete" method="POST">
+  <button class="delete_btn btn">削除</button>
   <table>
   @csrf
     <tr>
@@ -32,7 +36,7 @@
     </tr>
     @foreach($items as $item)
     <tr>
-      <td><input type="checkbox" name="delete_flg"></td>
+      <td><input type="checkbox" name="ids[]" value="{{$item->id}}"></td>
       <td>{{$item->id}}</td>
       <td>{{$item->name}}</td>
       <td>{{$item->name_furigana}}</td>
@@ -41,6 +45,5 @@
     </tr>
     @endforeach
   </table>
-  <button class="btn">削除</button>
 </form>
 @endsection

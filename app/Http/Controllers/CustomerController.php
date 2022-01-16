@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Customer;
 use Illuminate\Support\Facades\Log;
+use App\Models\Customer;
 
 class CustomerController extends Controller
 {
@@ -24,18 +24,49 @@ class CustomerController extends Controller
         Customer::create($form);
         return redirect('/');
     }
-    public function edit(Request $request)
+    public function edit()
     {
         $items = Customer::all();
         return view('update', ['items' => $items]);
     }
     public function update(Request $request)
     {
-        $this->validate($request, Customer::$rules);
-        $form = $request->all();
-        unset($form['_token']);
-        Log::debug($request);
-        Customer::where('id', $request->id)->update($form);
+        if(empty($request->ids))
+        {
+            return redirect('/');
+        }
+        $count = 0;
+        foreach($request->ids as $id)
+        {
+            $customer = [
+                'name' => $request->names[$count],
+                'name_furigana' => $request->name_furiganas[$count],
+                'birthday' => $request->birthdays[$count],
+                'email' => $request->emails[$count]
+            ];
+            $this->validate($customer, Customer::$rules);
+            $form = $customer->all();
+            unset($form['_token']);
+            Customer::where('id', $id)->update($form);
+            $count++;
+        }
+        return redirect('/');
+    }
+    public function delete()
+    {
+        $items = Customer::all();
+        return view('delete', ['items' => $items]);
+    }
+    public function remove(Request $request)
+    {
+        if(empty($request->ids))
+        {
+            return redirect('/');
+        }
+        foreach($request->ids as $id)
+        {
+            Customer::find($id)->delete();
+        }
         return redirect('/');
     }
 }
