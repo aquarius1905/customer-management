@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,10 +13,14 @@ use App\Http\Controllers\CustomerController;
 |
 */
 
-Route::get('/', [CustomerController::class, 'index']);
-Route::get('/add', [CustomerController::class, 'add']);
-Route::post('/add', [CustomerController::class, 'create']);
-Route::get('/update', [CustomerController::class, 'edit']);
-Route::post('/update', [CustomerController::class, 'update']);
-Route::get('/delete', [CustomerController::class, 'delete']);
-Route::post('/delete', [CustomerController::class, 'remove']);
+Route::get('/list', [CustomerController::class, 'list'])->name('list');
+Route::get('/add', [CustomerController::class, 'add'])->name('add');
+Route::post('/add', [CustomerController::class, 'create'])->name('create');
+Route::post('/update', [CustomerController::class, 'update'])->name('update');
+Route::post('/delete', [CustomerController::class, 'delete'])->name('delete');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';

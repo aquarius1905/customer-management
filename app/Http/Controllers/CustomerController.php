@@ -5,68 +5,36 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\Customer;
+use App\Http\Requests\CustomerRequest;
 
 class CustomerController extends Controller
 {
-    public function index()
+    public function list()
     {
         $items = Customer::all();
-        return view('index', ['items' => $items]);
+        return view('list', ['items' => $items]);
     }
     public function add()
     {
         return view('add');
     }
-    public function create(Request $request)
+    public function create(CustomerRequest $request)
     {
-        $this->validate($request, Customer::$rules);
         $form = $request->all();
+        unset($form['_token']);
         Customer::create($form);
-        return redirect('/');
+        return redirect('list');
     }
-    public function edit()
+    public function update(CustomerRequest $request)
     {
-        $items = Customer::all();
-        return view('update', ['items' => $items]);
+        $form = $request->all();
+        unset($form['_token']);
+        Customer::where('id', $request->id)->update($form);
+        return redirect('list');
     }
-    public function update(Request $request)
+    public function delete(Request $request)
     {
-        if(empty($request->ids))
-        {
-            return redirect('/');
-        }
-        $count = 0;
-        foreach($request->ids as $id)
-        {
-            $customer = [
-                'name' => $request->names[$count],
-                'name_furigana' => $request->name_furiganas[$count],
-                'birthday' => $request->birthdays[$count],
-                'email' => $request->emails[$count]
-            ];
-            $this->validate($customer, Customer::$rules);
-            $form = $customer->all();
-            unset($form['_token']);
-            Customer::where('id', $id)->update($form);
-            $count++;
-        }
-        return redirect('/');
-    }
-    public function delete()
-    {
-        $items = Customer::all();
-        return view('delete', ['items' => $items]);
-    }
-    public function remove(Request $request)
-    {
-        if(empty($request->ids))
-        {
-            return redirect('/');
-        }
-        foreach($request->ids as $id)
-        {
-            Customer::find($id)->delete();
-        }
-        return redirect('/');
+        Customer::find($request->id)->delete();
+        return redirect('list');
     }
 }

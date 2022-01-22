@@ -15,10 +15,10 @@ class CreateCustomersTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
-            $table->string('name_furigana', 100);
-            $table->date('birthday');
-            $table->string('email', 100);
+            $table->integer('user_id');
+            $table->string('name');
+            $table->string('name_furigana');
+            $table->string('email');
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
         });
